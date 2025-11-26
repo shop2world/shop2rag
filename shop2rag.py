@@ -13,10 +13,22 @@ except ImportError:
     print("requests 라이브러리가 필요합니다. 'pip install requests'를 실행하세요.")
     exit(1)
 
+# .env 파일에서 환경변수 로드 (선택사항)
+try:
+    from dotenv import load_dotenv
+    # 현재 작업 디렉토리에서 .env 파일 로드
+    result = load_dotenv()
+except ImportError:
+    # python-dotenv가 설치되지 않은 경우 무시하고 계속 진행
+    pass
+except Exception as e:
+    # .env 파일 로드 실패 시 무시하고 계속 진행
+    pass
+
 import google.generativeai as genai
 
 # --- 사용자 설정 ---
-# 1. Google API 키 설정 (환경변수에서 읽어옴)
+# 1. Google API 키 설정 (환경변수 또는 .env 파일에서 읽어옴)
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 if not GOOGLE_API_KEY:
     print("오류: GOOGLE_API_KEY 환경변수가 설정되지 않았습니다.")
