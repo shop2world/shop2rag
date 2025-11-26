@@ -62,6 +62,7 @@ try:
         print(f"다운로드 완료: {PDF_FILE_NAME}")
         
         # 파일 업로드
+        # 업로드된 파일은 FileSearchStore에 저장되고, 자동으로 전처리 및 청크 분할이 수행됩니다.
         print(f"\n파일을 Google AI에 업로드 중...")
         uploaded_file = genai.upload_file(path=PDF_FILE_NAME, display_name=DOCUMENT_NAME)
         print(f"업로드 완료: {uploaded_file.display_name}")
@@ -73,8 +74,16 @@ try:
         # 검색할 질문 (레스토랑 메뉴 관련)
         query = "시그니처 메뉴의 가격을 알려주세요."
         
-        # 모델에 질문과 함께 업로드된 파일 전달
-        # 라이브러리가 자동으로 파일 내용을 검색하고 컨텍스트로 활용하여 답변을 생성합니다.
+        # ===== file_search 도구 사용 부분 =====
+        # 모델에 질문(query)과 함께 업로드된 파일(uploaded_file) 정보를 전달합니다.
+        # uploaded_file 객체를 전달하면, Gemini가 자동으로 file_search 도구를 사용하여:
+        # 1. 질문과 관련된 파일 내용을 검색합니다 (의미 기반 검색)
+        # 2. 검색된 결과를 컨텍스트로 활용합니다
+        # 3. 컨텍스트 + 질문을 바탕으로 최종 답변을 생성합니다
+        # 
+        # 명시적으로 tools=['file_search']를 지정할 필요는 없습니다.
+        # uploaded_file을 전달하는 것만으로도 file_search 도구가 자동으로 활성화됩니다.
+        # ==========================================
         response = model.generate_content([query, uploaded_file])
 
         print(f"\n질문: {query}")
