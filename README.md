@@ -1,5 +1,7 @@
 # Shop2RAG - Google 파일 검색 API를 활용한 RAG 시스템
 
+[![YouTube Video](https://img.youtube.com/vi/S5Zr_Pw6xNM/maxresdefault.jpg)](https://www.youtube.com/watch?v=S5Zr_Pw6xNM)
+
 Google의 파일 검색 스토어(FileSearchStore)를 활용하여 RAG(Retrieval-Augmented Generation) 시스템을 구축하는 Python 예제입니다.
 
 ## 📋 개요
